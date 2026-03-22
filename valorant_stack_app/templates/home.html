@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Valorant Agent Randomizer{% endblock %}
+
+{% block extra_head %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h1 class="main-title"><b>VALORANT AGENT RANDOMIZER</b></h1>
+
+        <div class="workflow-note">
+            <h3>How To Use</h3>
+            <ol>
+                <li>Add 1-5 players first.</li>
+                <li>Set role counts in the Priority Role Pool. (Optional)</li>
+                <li>Click Randomize All, or use each card's Randomize button</li>
+            </ol>
+        </div>
+
+        <div id="alert-container" class="mb-4"></div>
+        
+        <div class="input-section">
+            <form id="player-input-form">
+                {% csrf_token %}
+                <input type="text" id="player-name-input" placeholder="Enter player name" maxlength="15">
+                <button id="add-player-button" type="button">Add Player</button>
+            </form>
+            <p class="player-count"><span id="player-count">0</span>/5 players</p>
+        </div>
+
+        <div class="role-pool-section">
+            <h3>Priority Role Pool (Optional)</h3>
+            <p class="role-pool-hint">Set how many players should be a certain role. Leave counts at 0 to fully randomize</p>
+            <p class="role-pool-note">Ex: If you set Duelist to 1, at least one player will randomly be a Duelist.</p>
+            <p class="role-pool-note">Note: If a card shows the Priority badge, that player was assigned a priority role.</p>
+            <div class="role-grid">
+                <label class="role-count-item" for="count-duelist">
+                    <span>Duelist</span>
+                    <input id="count-duelist" type="number" min="0" max="5" value="0">
+                </label>
+                <label class="role-count-item" for="count-initiator">
+                    <span>Initiator</span>
+                    <input id="count-initiator" type="number" min="0" max="5" value="0">
+                </label>
+                <label class="role-count-item" for="count-controller">
+                    <span>Controller</span>
+                    <input id="count-controller" type="number" min="0" max="5" value="0">
+                </label>
+                <label class="role-count-item" for="count-sentinel">
+                    <span>Sentinel</span>
+                    <input id="count-sentinel" type="number" min="0" max="5" value="0">
+                </label>
+            </div>
+            <p class="role-pool-total"><span id="selected-role-total">0</span> selected</p>
+        </div>
+
+        <div class="action-buttons">
+            <button id="randomize-button" disabled>Randomize All</button>
+            <button id="reveal-all-button" disabled>Reveal All</button>
+        </div>
+
+        <div id="player-card-container"></div>
+    </div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    {% load static %}
+    <script>
+        window.STATIC_EMPTY_IMAGE_URL = "{% static 'img/empty_image.png' %}";
+        window.STATIC_HIDDEN_IMAGE_URL = "{% static 'img/hidden_image.jpg' %}";
+    </script>
+    <script src="{% static 'script.js' %}"></script>
+{% endblock %}

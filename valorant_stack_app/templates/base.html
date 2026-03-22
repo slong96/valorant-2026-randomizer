@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Valorant Agent Randomizer{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <nav class="site-nav" aria-label="Primary Navigation">
+        <div class="site-nav-inner">
+            <a class="site-nav-link" href="{% url 'home' %}">Home</a>
+            <a class="site-nav-link" href="{% url 'about' %}">About</a>
+            <a class="site-nav-link" href="https://github.com/slong96" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
