@@ -2,7 +2,7 @@
 
 A Django web app for randomizing Valorant Agents for 1-5 players.
 
-## Getting Started
+## Getting Started to Run on Local Host
 
 ### Prerequisites
 
@@ -18,7 +18,7 @@ A Django web app for randomizing Valorant Agents for 1-5 players.
    cd valorant-2026-randomizer
    ```
 
-2. **Install Python and Django**
+2. **Create virtual enviornment**
 
    Make sure [Python](https://www.python.org/downloads/) is installed, then set up a virtual environment:
 
