@@ -290,6 +290,11 @@ h1 {
     font-weight: 700;
 }
 
+.role-count-item input:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
 .role-pool-total {
     margin-top: 10px;
     text-align: right;

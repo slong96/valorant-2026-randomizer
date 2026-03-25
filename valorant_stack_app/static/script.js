@@ -173,6 +173,14 @@ function renderPlayerCards() {
 
     randomizeButton.disabled = players.length === 0;
     updateRevealAllButton();
+    updateRolePoolInputs();
+}
+
+function updateRolePoolInputs() {
+    const disabled = players.length === 0;
+    Object.values(roleInputs).forEach(input => {
+        input.disabled = disabled;
+    });
 }
 
 function updateRevealAllButton() {
