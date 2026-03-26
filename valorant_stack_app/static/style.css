@@ -212,6 +212,7 @@ h1 {
 #add-player-button,
 #randomize-button,
 #reveal-all-button,
+#clear-button,
 .rerandomize-btn,
 .home-link {
     border: 1px solid transparent;
@@ -337,7 +338,8 @@ h1 {
 }
 
 #randomize-button,
-#reveal-all-button {
+#reveal-all-button,
+#clear-button {
     min-width: 220px;
     min-height: 52px;
     padding: 12px 24px;
@@ -356,8 +358,15 @@ h1 {
     box-shadow: 0 11px 25px rgba(255, 143, 55, 0.35);
 }
 
+#clear-button {
+    color: #ffffff;
+    background: linear-gradient(135deg, #ff5c57, #ff2f74);
+    box-shadow: 0 11px 25px rgba(255, 47, 116, 0.35);
+}
+
 #randomize-button:hover:not(:disabled),
 #reveal-all-button:hover:not(:disabled),
+#clear-button:hover:not(:disabled),
 .rerandomize-btn:hover:not(:disabled) {
     filter: brightness(1.08);
     transform: translateY(-2px);
@@ -365,6 +374,7 @@ h1 {
 
 #randomize-button:disabled,
 #reveal-all-button:disabled,
+#clear-button:disabled,
 .rerandomize-btn:disabled {
     cursor: not-allowed;
     opacity: 0.45;
@@ -629,7 +639,8 @@ h1 {
 
     #add-player-button,
     #randomize-button,
-    #reveal-all-button {
+    #reveal-all-button,
+    #clear-button {
         width: 100%;
     }
 

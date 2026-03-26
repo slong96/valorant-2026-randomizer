@@ -2,6 +2,7 @@ const playerNameInput = document.getElementById('player-name-input');
 const addPlayerButton = document.getElementById('add-player-button');
 const randomizeButton = document.getElementById('randomize-button');
 const revealAllButton = document.getElementById('reveal-all-button');
+const clearButton = document.getElementById('clear-button');
 const playerCountDisplay = document.getElementById('player-count');
 const cardContainer = document.getElementById('player-card-container');
 const alertContainer = document.getElementById('alert-container');
@@ -33,6 +34,7 @@ const HIDDEN_IMAGE = window.STATIC_HIDDEN_IMAGE_URL || '/static/img/hidden_image
 addPlayerButton.addEventListener('click', addPlayer);
 randomizeButton.addEventListener('click', randomizeAgents);
 revealAllButton.addEventListener('click', revealAllCards);
+clearButton.addEventListener('click', clearPlayerCards);
 playerNameInput.addEventListener('input', handlePlayerNameInput);
 playerNameInput.addEventListener('keypress', event => {
     if (event.key === 'Enter') {
@@ -64,6 +66,17 @@ function addPlayer() {
 
     players.push({ id: nextPlayerId++, name: playerName });
     playerNameInput.value = '';
+    clearAlert();
+    renderPlayerCards();
+    clampRoleCountsToPlayerCount();
+    updateRolePoolSummary();
+}
+
+function clearPlayerCards() {
+    players = [];
+    playerAgents = {};
+    playerAssignedRoles = {};
+    concealedPlayers = {};
     clearAlert();
     renderPlayerCards();
     clampRoleCountsToPlayerCount();
@@ -172,6 +185,7 @@ function renderPlayerCards() {
     updatePriorityBadges();
 
     randomizeButton.disabled = players.length === 0;
+    clearButton.disabled = players.length === 0;
     updateRevealAllButton();
     updateRolePoolInputs();
 }
