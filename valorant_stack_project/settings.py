@@ -84,6 +84,14 @@ elif DEBUG == False:
     DATABASES['default'] = dj_database_url.parse(os.getenv('RENDER_POSTGRESQL_EXTERNAL'))
 
 
+# Caching configuration
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'valorant-cache',
+    }
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
