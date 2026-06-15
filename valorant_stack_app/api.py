@@ -4,7 +4,6 @@ import threading
 from datetime import timedelta
 
 from django.utils import timezone
-from django.core.cache import cache
 
 from .models import Agent
 
@@ -120,10 +119,6 @@ def sync_agents_to_db():
                 'is_active': True,
             },
         )
-    
-    # Invalidate cache when agents are updated
-    cache.delete('agents_list')
-    cache.delete('available_agents')
 
 
 def sync_agents_if_stale(max_age_hours=SYNC_MAX_AGE_HOURS):
@@ -146,14 +141,9 @@ def get_random_assignments(players):
     """
     sync_agents_if_stale()
 
-    # Try cache first to avoid DB query
-    available_agents = cache.get('available_agents')
-    if available_agents is None:
-        available_agents = list(Agent.objects.filter(is_active=True).values('name', 'role', 'display_icon'))
-        cache.set('available_agents', available_agents, 43200)  # Cache for 12 hours
+    available_agents = list(Agent.objects.filter(is_active=True).values('name', 'role', 'display_icon'))
 
     if len(available_agents) < len(players):
         return None
 
     return _build_unique_assignments(players, available_agents)
-    

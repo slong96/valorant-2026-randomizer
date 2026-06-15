@@ -3,7 +3,6 @@ import random
 
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.core.cache import cache
 
 from .api import get_random_assignments, sync_agents_if_stale
 from .models import Agent
@@ -24,11 +23,6 @@ def custom_404(request, exception=None):
 
 
 def get_agents(request):
-    # Try to get from cache first
-    cached_agents = cache.get('agents_list')
-    if cached_agents is not None:
-        return JsonResponse(cached_agents, safe=False)
-    
     sync_agents_if_stale()
 
     data = list(Agent.objects.filter(is_active=True).values('name', 'role', 'display_icon'))
@@ -41,8 +35,6 @@ def get_agents(request):
         for agent in data
     ]
 
-    # Cache for 12 hours
-    cache.set('agents_list', normalized, 43200)
     return JsonResponse(normalized, safe=False)
 
 
