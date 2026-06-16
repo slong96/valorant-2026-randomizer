@@ -7,6 +7,8 @@ const playerCountDisplay = document.getElementById('player-count');
 const cardContainer = document.getElementById('player-card-container');
 const alertContainer = document.getElementById('alert-container');
 const selectedRoleTotalDisplay = document.getElementById('selected-role-total');
+const rolePoolToggle = document.getElementById('role-pool-toggle');
+const rolePoolSection = document.getElementById('role-pool-section');
 
 const roleInputs = {
     Duelist: document.getElementById('count-duelist'),
@@ -35,6 +37,7 @@ addPlayerButton.addEventListener('click', addPlayer);
 randomizeButton.addEventListener('click', randomizeAgents);
 revealAllButton.addEventListener('click', revealAllCards);
 clearButton.addEventListener('click', clearPlayerCards);
+rolePoolToggle.addEventListener('change', handleRolePoolToggle);
 playerNameInput.addEventListener('input', handlePlayerNameInput);
 playerNameInput.addEventListener('keypress', event => {
     if (event.key === 'Enter') {
@@ -49,6 +52,22 @@ Object.values(roleInputs).forEach(input => {
 
 function handlePlayerNameInput() {
     clearResolvedWarningAlert();
+}
+
+function handleRolePoolToggle() {
+    if (rolePoolToggle.checked) {
+        rolePoolSection.style.display = 'block';
+        Object.values(roleInputs).forEach(input => {
+            input.disabled = false;
+        });
+    } else {
+        rolePoolSection.style.display = 'none';
+        Object.values(roleInputs).forEach(input => {
+            input.disabled = true;
+            input.value = 0;
+        });
+        updateRolePoolSummary();
+    }
 }
 
 function addPlayer() {
