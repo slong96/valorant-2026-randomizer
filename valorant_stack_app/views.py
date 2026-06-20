@@ -4,7 +4,7 @@ import random
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from .api import get_random_assignments, sync_agents_if_stale
+from .api import get_random_assignments, sync_agents_if_stale_async
 from .models import Agent
 
 
@@ -23,7 +23,7 @@ def custom_404(request, exception=None):
 
 
 def get_agents(request):
-    sync_agents_if_stale()
+    sync_agents_if_stale_async()
 
     data = list(Agent.objects.filter(is_active=True).values('name', 'role', 'display_icon'))
     normalized = [

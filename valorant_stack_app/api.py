@@ -134,12 +134,21 @@ def sync_agents_if_stale(max_age_hours=SYNC_MAX_AGE_HOURS):
             sync_agents_to_db()
 
 
+def sync_agents_if_stale_async(max_age_hours=SYNC_MAX_AGE_HOURS):
+    """Check if sync is needed and run it in background thread (non-blocking)."""
+    latest_update = Agent.objects.filter(is_active=True).order_by('-updated_at').values_list('updated_at', flat=True).first()
+    if latest_update is None or (timezone.now() - timedelta(hours=max_age_hours)) > latest_update:
+        # Spawn background thread to sync without blocking the request
+        thread = threading.Thread(target=sync_agents_if_stale, kwargs={'max_age_hours': max_age_hours}, daemon=True)
+        thread.start()
+
+
 def get_random_assignments(players):
     """Return unique agent assignments for player payload.
 
     players: list[dict] with keys id, name, preferredRole
     """
-    sync_agents_if_stale()
+    sync_agents_if_stale_async()
 
     available_agents = list(Agent.objects.filter(is_active=True).values('name', 'role', 'display_icon'))
 
